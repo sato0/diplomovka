@@ -1,0 +1,20 @@
+pozriet odborne clanky (na F. stranke)
+Qslim - alg. na optimalizaciu trojuhonikov , opensource
+chceme kvara - daco - alg       asi quadric error metrics simplification
+pgsql - ako pridavat fcie, extenzie v c
+las tool - pozriet
+data - zurrich, anglicko, las format, na spracovanie
+ciel - spracovat data z las, podstrcit ich pqsgl, ten zozerie a vypluje  opt. tin vo formate pgsql
+    - do pgsql implementovat Qslim alg, zbytocne don nesahat => pripravit mu vstup, upravit z neho vystup
+    
+data: svajciarsko zurrich http://maps.zh.ch/download/hoehen/2014/lidar/    (EPSG:21781)
+      anglicko http://environment.data.gov.uk/ds/survey#/   len .asc subory, mracna bodov od juna 2016 vraj
+      
+      
+qslim
+http://mgarland.org/software/qslim20.html
+
+rozbehat qslim21
+na ziskanie topologie z d.triangulation nastroj od kalivodu dp
+data len svajc
+smf format pouzit mashlab

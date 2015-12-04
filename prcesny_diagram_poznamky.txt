@@ -1,0 +1,12 @@
+vstup:
+#-vstupné údaje vo formáte las/laz
+-príprava údajov pomocou nástroja LASTOOLS(QGIS plugin)
+-selekcia odrazu z reliéfu (len kategória 2)
+#-exportované body v tvare x y z 
+-spracovanie údajov v PostgreSQL
+-Delaunayova triangulácia
+-získanie topológie
+#-výsledná TIN vo formáte SMF(resp. OBJ)
+-optimalizácia algoritmom QSLIM
+-úprava optimalizovanej TIN do formátu PostgreSQL(TIN,TRIANGLE,..)
+#-optimalizovaná TIN z lidarových údajov uložená v databáze

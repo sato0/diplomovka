@@ -1,0 +1,64 @@
+﻿-- CREATE TABLE coordinates_zurich
+-- (
+--   id serial NOT NULL,
+--   x numeric(8,2),
+--   y numeric(8,2),
+--   z numeric(8,2),
+--   point_col geometry,
+--   CONSTRAINT coordinates_pkey PRIMARY KEY (id)
+-- 
+-- );
+-- 
+-- 
+-- copy coordinates_zurich(x,y,z) FROM '/home/sato/Desktop/dp/connect_to_db/sample_zurich' DELIMITERS ' ' ;
+-- UPDATE coordinates_zurich
+-- 	SET point_col = ST_MakePoint(coordinates_zurich.x,coordinates_zurich.y,coordinates_zurich.z);
+
+
+-- CREATE TABLE coordinates_house26
+-- (
+--   id serial NOT NULL,
+--   x numeric(10,2),
+--   y numeric(10,2),
+--   z numeric(10,2),
+--   point_col geometry,
+--   CONSTRAINT coordinates_house26_pkey PRIMARY KEY (id)
+-- 
+-- );
+
+-- copy coordinates_house26(x,y,z) FROM '/home/sato/Desktop/dp/connect_to_db/sample_house26' DELIMITERS ' ' ;
+-- UPDATE coordinates_house26
+-- 	SET point_col = ST_MakePoint(coordinates_house26.x,coordinates_house26.y,coordinates_house26.z);
+
+
+-- 
+-- CREATE TABLE coordinates_house26_triangles
+-- (
+--   id serial NOT NULL,
+--   polygon_col geometry,
+--   wkt_col text,
+--   CONSTRAINT coordinates_house26_triangles_pkey PRIMARY KEY (id)
+-- 
+-- );
+
+-- SELECT ST_AsText((ST_Dump(geom)).geom)  into table text_polygons_hause26 
+-- FROM ( SELECT ST_DelaunayTriangles(ST_Collect(point_col)) As geom
+-- FROM coordinates_house26)as foo ;
+-------------------------------------------------DONE----------------------------------------
+
+UPDATE coordinates_house26_triangles
+	SET polygon_col =  geometry
+	from (
+		select ST_GeomFromText(st_astext) as geometry from text_polygons_hause26 ) t;
+
+--select id,wkt,polygons from coordinates_house26_triangles  ;
+
+--)
+-- SELECT ST_GeomFromText(st_astext)  into table coordinates_house26_triangles 
+-- FROM ( SELECT ST_DelaunayTriangles(ST_Collect(point_col)) As geom
+-- FROM coordinates_house26)as foo ;
+-- 
+-- INSERT INTO coordinates_house26_triangles
+-- (polygons)
+-- SELECT ST_GeomFromText(st_astext)
+-- FROM text_polygons;

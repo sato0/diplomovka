@@ -1,0 +1,5 @@
+# pg3angles extension
+comment = 'The functions extending the PostgreSQL and PostGIS for processing a geometry type TRIANGLE'
+default_version = '1.01'
+module_pathname = '$libdir/pg3angles-1.01'
+relocatable = true
