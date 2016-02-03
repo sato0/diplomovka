@@ -1,5 +1,5 @@
 ﻿--/home/sato/Desktop/dp/connect_to_db/
---select tin_topology('/home/sato/Desktop/dp/las_data_samples/zurich2txt','/home/sato/Desktop/dp/connect_to_db','zurich2')
+--select tin_topology('/home/sato/Desktop/dp/las_data_samples/smallpiece','/home/sato/Desktop/dp/connect_to_db','lake2txt');
 CREATE OR REPLACE FUNCTION tin_topology (input_file text, output_dir text, output_files text) RETURNS text AS 
 $$
 BEGIN  
@@ -56,7 +56,7 @@ EXECUTE 'ALTER TABLE coordinates_tmp ADD COLUMN vertex text';
 
 RAISE NOTICE 'pridane stlpce pid1-3';
 
---tuto cast treba optimalizovat? priserne dlha je triangulacia a s tou nic nenarobim
+-- priserne dlha je triangulacia
 
 EXECUTE 'UPDATE polygons_tmp SET pid1 = coordinates_tmp.id FROM coordinates_tmp
   WHERE point_wkt = polygons_tmp.point1';
@@ -79,9 +79,17 @@ UPDATE coordinates_tmp SET vertex = 'v';
 
 RAISE NOTICE 'topologia vytvorena';
 
-EXECUTE 'COPY (SELECT vertex,x,y,z FROM coordinates_tmp ORDER BY id ASC) TO ' || quote_literal(output_dir || '/' || output_files || '_vertex.obj') ||' DELIMITER '|| quote_literal(E' ') ;
-EXECUTE 'COPY (SELECT face,pid1,pid2,pid3 FROM polygons_tmp ) TO ' || quote_literal(output_dir || '/' || output_files || '_face.obj') ||' DELIMITER'|| quote_literal(E' ') ;
+ALTER TABLE polygons_tmp RENAME COLUMN face TO vertex;
+ALTER TABLE polygons_tmp RENAME COLUMN pid1 TO x;
+ALTER TABLE polygons_tmp RENAME COLUMN pid2 TO y;
+ALTER TABLE polygons_tmp RENAME COLUMN pid3 TO z;
 
+EXECUTE 'COPY ((SELECT vertex,x,y,z FROM coordinates_tmp ORDER BY id ASC) UNION ALL (SELECT vertex,x,y,z FROM polygons_tmp) )TO ' || quote_literal(output_dir || '/' || output_files || '.obj') ||' DELIMITER '|| quote_literal(E' ') ;
+
+-- 
+-- EXECUTE 'COPY (SELECT vertex,x,y,z FROM coordinates_tmp ORDER BY id ASC) TO ' || quote_literal(output_dir || '/' || output_files || '_vertex.obj') ||' DELIMITER '|| quote_literal(E' ') ;
+-- EXECUTE 'COPY (SELECT face,pid1,pid2,pid3 FROM polygons_tmp ) TO ' || quote_literal(output_dir || '/' || output_files || '_face.obj') ||' DELIMITER'|| quote_literal(E' ') ;
+--union all, na str,rovnake nazvy stlpcov
 RAISE NOTICE 'subory vytvorene';
 
 DROP TABLE IF EXISTS coordinates_tmp;
@@ -90,17 +98,17 @@ RAISE NOTICE 'tabulky zmazane';
 
 SET enable_seqscan = ON;
 	
-  RETURN 'STRUKTURA VYTVORENA V SUBOROCH';
+  RETURN 'STRUKTURA VYTVORENA V SUBORE .obj';
   END
 $$
 LANGUAGE plpgsql;
 
 
 
-
+--sfcgal
 
 
 
 --v bash cat /home/sato/Desktop/dp/connect_to_db/vertex_from_pg.obj /.../face.obj  > /.../vertex.obj
---dorobit v c funkciu na spojenie suborov
+--dorobit v funkciu na spojenie suborov
 

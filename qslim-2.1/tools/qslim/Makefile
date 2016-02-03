@@ -1,20 +1,17 @@
 include ../../mixkit/mix-config
 
-SRCS = main.cxx qslim.cxx
+SRCS = main.cxx singleQ.cxx 
 OBJS = $(SRCS:.cxx=.o)
-QVIS_OBJS = $(QVIS_SRCS:.cxx=.o)
+CSOURCE = qslim.c 
+OBJSC = $(CSOURCE:.c=.o)
 
 all: qslim 
 
-qslim : $(OBJS) ../../mixkit/src/libmix.a
-	$(CXX) -o qslim $(OBJS) $(LDFLAGS) $(LIBMIX) -lm
+qslim : $(OBJS) $(OBJSC) ../../mixkit/src/libmix.a
+	$(CXX) -o qslim $(OBJS) qslim.o $(LDFLAGS) $(LIBMIX) -lm
+
+qslim.o: qslim.c 
+	$(CXX) -c -o qslim.o qslim.c 
 
 clean:
-	-$(RM) -f $(OBJS) qslim
-	-cat /dev/null > Makefile.dep
-
-
-depend:
-	$(CXX_DEPEND) $(SRCS) $(QVIS_SRCS) > Makefile.dep
-
--include Makefile.dep
+	-$(RM) -f $(OBJS) qslim.o qslim

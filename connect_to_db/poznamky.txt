@@ -1,0 +1,3 @@
+extrahovat qslim do samostatneho suboru
+aby sa dala fcia linkmut cez include
+skusit to strcit do pgsql

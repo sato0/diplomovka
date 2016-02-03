@@ -1,0 +1,11 @@
+CXX=gcc
+CXXFLAGS=-I/usr/include/postgresql/9.4/server
+DEST=/usr/lib/postgresql/9.4/lib/
+all: qslim
+
+qslim:
+	$(CXX) $(CXXFLAGS) -fpic -c qslim.c # add static lib a? with extern C definition of qslim
+	$(CXX) -shared -o $(DEST)qslim.so qslim.o
+
+clean:
+	rm -f qslim.o $(DEST)qslim.so
