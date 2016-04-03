@@ -9,12 +9,12 @@
   $Id: qslim.cxx,v 1.10 2000/11/20 20:52:41 garland Exp $
 
  ************************************************************************/
-#include "singleQ.h"
+#include "externQslim.h"
 
 int main()
 {
 
-    QSLIM("/home/sato/Desktop/dp/qslim-2.1/tools/qslim/bones.obj","bones200.obj",200);
+    Qslim_alg("/home/sato/Desktop/dp/qslim-2.1/tools/qslim/bones.obj","bones333.obj",333,3,1,1000);
 
     return 0;
 }

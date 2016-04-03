@@ -9,8 +9,9 @@
 #  include <getopt.h>
 #endif
 
+//with no default args: QSLIM (input_file_name,output_file_name,face_count,3,1,1000)
 
-void QSLIM (const char *Ainput_file_name,char *Aoutput_file_name,int Aface_c,int Aplacement_policy=3, int Aquadric_weight=1,double Aboundary_weight=1000)
+extern "C" void QSLIM (char *Ainput_file_name,char *Aoutput_file_name,int Aface_c,int Aplacement_policy, int Aquadric_weight,double Aboundary_weight)
 {
       //startup and input
    smf = new MxSMFReader;
@@ -48,6 +49,6 @@ void QSLIM (const char *Ainput_file_name,char *Aoutput_file_name,int Aface_c,int
     slim->decimate(face_target);
     output_final_model();
     //cerr << "faces: " << slim->valid_faces  << endl << "vertex: " << slim->valid_verts << endl;
-    slim_cleanup();
+   // slim_cleanup();
     // add print for output
 }

@@ -78,7 +78,7 @@ UPDATE polygons_tmp SET face = 'f';
 UPDATE coordinates_tmp SET vertex = 'v';
 
 RAISE NOTICE 'topologia vytvorena';
-
+ -- rename for join tables in one obj file
 ALTER TABLE polygons_tmp RENAME COLUMN face TO vertex;
 ALTER TABLE polygons_tmp RENAME COLUMN pid1 TO x;
 ALTER TABLE polygons_tmp RENAME COLUMN pid2 TO y;

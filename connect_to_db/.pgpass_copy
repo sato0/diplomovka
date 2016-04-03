@@ -1,0 +1,3 @@
+localhost:5432:dp:mariana:mariana
+localhost:*:*:mariana:mariana
+localhost:5432:*:mariana:mariana

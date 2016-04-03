@@ -142,7 +142,7 @@ BEGIN
   INSERT INTO temppid1 SELECT * FROM tidpid1;
   RAISE NOTICE 'temppid1 naplnena';
   CREATE INDEX ON temppid1 (tid);
-  EXECUTE 'UPDATE ' || tintable ||' AS a SET pid1 = (SELECT pid1 FROM temppid1 AS b WHERE a.tid = b.tid)';
+  EXECUTE 'UPDATE ' || tintable ||' AS a SET pid1 = (SELECT pid1 FROM temppid1 AS b WHERE a.tid = b.tid LIMIT 1)';
   RAISE NOTICE 'pid1 updatnute';
   
   CREATE TABLE temppid2 (tid integer, pid2 integer);
@@ -156,7 +156,7 @@ BEGIN
   INSERT INTO temppid2 SELECT * FROM tidpid2;
   RAISE NOTICE 'temppid2 naplnena';
   CREATE INDEX ON temppid2 (tid);
-  EXECUTE 'UPDATE ' || tintable ||' AS a SET pid2 = (SELECT pid2 FROM temppid2 AS b WHERE a.tid = b.tid)';
+  EXECUTE 'UPDATE ' || tintable ||' AS a SET pid2 = (SELECT pid2 FROM temppid2 AS b WHERE a.tid = b.tid LIMIT 1)';
   RAISE NOTICE 'pid2 updatnute';
   
   CREATE TABLE temppid3 (tid integer, pid3 integer);
@@ -170,7 +170,7 @@ BEGIN
   INSERT INTO temppid3 SELECT * FROM tidpid3;
   RAISE NOTICE 'temppid3 naplnena';
   CREATE INDEX ON temppid3 (tid);
-  EXECUTE 'UPDATE ' || tintable ||' AS a SET pid3 = (SELECT pid3 FROM temppid3 AS b WHERE a.tid = b.tid)';
+  EXECUTE 'UPDATE ' || tintable ||' AS a SET pid3 = (SELECT pid3 FROM temppid3 AS b WHERE a.tid = b.tid LIMIT 1)';
   RAISE NOTICE 'pid3 updatnute';
   
   DROP TABLE temptplg1;
@@ -508,7 +508,7 @@ CREATE OR REPLACE FUNCTION tin_linearz(triangle geometry, point geometry)
 
 CREATE OR REPLACE FUNCTION _tin_flip(triangle1 geometry, triangle2 geometry)
   RETURNS geometry[] AS
-'$libdir\pg3angles-1.01', 'TIN_Flip'
+'$libdir/pg3angles-1.01', 'TIN_Flip'
 	LANGUAGE c STRICT; 
   
 CREATE OR REPLACE FUNCTION _tin_partialderivativesonvertex(point geometry, triangles geometry[])

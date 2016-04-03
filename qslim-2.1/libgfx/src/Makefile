@@ -10,17 +10,25 @@ GUI_SRCS = gui.cxx gltools.cxx baseball.cxx trackball.cxx arcball.cxx
 SRCS = $(VEC_SRCS) $(GEO_SRCS) $(IMG_SRCS) $(MISC_SRCS) $(GUI_SRCS)
 OBJS = $(SRCS:.cxx=.o)
 
-libgfx.a: $(OBJS)
-	$(AR) cru libgfx.a $(OBJS)
+SRCSALL = mat2.cxx mat3.cxx mat4.cxx quat.cxx symmat3.cxx geom3d.cxx raster.cxx raster-pnm.cxx raster-tiff.cxx raster-jpeg.cxx raster-png.cxx time.cxx script.cxx
+OBJSALL = $(SRCSALL:.cxx=.o)
+libgfx.a: $(OBJSALL) foo
+	$(AR) cru libgfx.a $(OBJSALL)
 	$(RANLIB) libgfx.a
 
-tags: $(SRCS) ../include/gfx/*.h
-	ctags $(SRCS) ../include/gfx/*.h
+foo:
+	for src in $(SRCSALL); do \
+	$(CC) -c -fPIC $$src $(LDFLAGS) $(CXXFLAGS) -lm; \
+	done
+
+
+tags: $(SRCSALL) ../include/gfx/*.h
+	ctags $(SRCSALL) ../include/gfx/*.h
 
 clean:
-	-$(RM) $(OBJS) libgfx.a
+	-$(RM) $(OBJSALL) libgfx.a
 
 depend:
-	$(CXX_DEPEND) $(SRCS) > Makefile.dep
+	$(CXX_DEPEND) $(SRCSALL) > Makefile.dep
 
 -include Makefile.dep

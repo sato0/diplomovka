@@ -30,14 +30,23 @@ SRCS = $(CORE_SRCS) $(MATH_SRCS) $(MODEL_SRCS) $(DATA_SRCS) \
 
 OBJS = $(SRCS:.cxx=.o)
 
-########################################################################
 
-libmix.a: $(OBJS)
-	$(AR) cru libmix.a $(OBJS)
+SRCSALL = mixmsg.cxx MxCmdParser.cxx MxAsp.cxx MxMat3-jacobi.cxx MxMat4-jacobi.cxx MxGeom3D.cxx MxTriProject.cxx MxFrame.cxx MxFitFrame.cxx MxFitFrame-2.cxx MxGeom2D.cxx mixmops.cxx MxBlockModel.cxx MxStdModel.cxx MxSMF.cxx MxQMetric3.cxx MxQSlim.cxx MxStdSlim.cxx MxQMetric.cxx MxPropSlim.cxx MxDualModel.cxx MxFaceTree.cxx MxFaceTree-2.cxx MxDualSlim.cxx MxEdgeFilter.cxx MxFeatureFilter.cxx MxHeap.cxx
+OBJALL = mixmsg.o MxCmdParser.o MxAsp.o MxMat3-jacobi.o MxMat4-jacobi.o MxGeom3D.o MxTriProject.o MxFrame.o MxFitFrame.o MxFitFrame-2.o MxGeom2D.o mixmops.o MxBlockModel.o MxStdModel.o MxSMF.o MxQMetric3.o MxQSlim.o MxStdSlim.o MxQMetric.o MxPropSlim.o MxDualModel.o MxFaceTree.o MxFaceTree-2.o MxDualSlim.o MxEdgeFilter.o MxFeatureFilter.o MxHeap.o
+
+libmix.a: foo
+	$(AR) cru libmix.a $(OBJALL) 
 	$(RANLIB) libmix.a
 
+foo:
+	for src in $(SRCSALL); do \
+	$(CC) -c -fPIC $$src $(LDFLAGS) $(CXXFLAGS) $(LIBMIX) -lm; \
+	done
+#############################################################
+
+
 clean:
-	-$(RM) -f $(OBJS) libmix.a
+	-$(RM) -f $(OBJALL) libmix.a
 
 depend:
 	$(CXX_DEPEND) $(SRCS) > Makefile.dep

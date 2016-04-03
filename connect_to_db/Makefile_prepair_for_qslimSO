@@ -1,11 +1,22 @@
-CXX=gcc
-CXXFLAGS=-I/usr/include/postgresql/9.4/server
-DEST=/usr/lib/postgresql/9.4/lib/
-all: qslim
+include ../../mixkit/mix-config
 
-qslim:
-	$(CXX) $(CXXFLAGS) -fpic -c qslim.c # add static lib a? with extern C definition of qslim
-	$(CXX) -shared -o $(DEST)qslim.so qslim.o
+PG=-I/usr/include/postgresql/9.4/server
+DEST=/usr/lib/postgresql/9.4/lib/
+SRCS = main.cxx singleQ.cxx  externQslim.cxx
+OBJS = $(SRCS:.cxx=.o)
+
+qslim.so: $(OBJS)  ../../mixkit/src/libmix.a
+	$(CC) $(CXXFLAGS) -fpic -c qslim.c
+	$(CC) -shared -o $(DEST)qslim.so qslim.o $(OBJS) $(LDFLAGS) $(LIBMIX) -lm
 
 clean:
-	rm -f qslim.o $(DEST)qslim.so
+	rm -f $(OBJS) $(DEST)qslim.so
+
+
+
+
+
+
+#objects are compilated by implicit rules
+# osobitne skompilovat cez gcc ? exernQslim, qslim ako so do postgreqsql
+

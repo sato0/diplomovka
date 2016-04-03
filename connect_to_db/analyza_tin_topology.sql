@@ -53,7 +53,6 @@ EXECUTE 'ALTER TABLE polygons_tmp ADD COLUMN pid3 integer';
 EXECUTE 'ALTER TABLE polygons_tmp ADD COLUMN face text';
 EXECUTE 'ALTER TABLE coordinates_tmp ADD COLUMN vertex text';
 
---tuto cast treba optimalizovat
 
 EXECUTE 'explain UPDATE polygons_tmp SET pid1 = coordinates_tmp.id FROM coordinates_tmp
   WHERE point_wkt = polygons_tmp.point1';
@@ -61,8 +60,6 @@ EXECUTE 'UPDATE polygons_tmp SET pid2 = coordinates_tmp.id FROM coordinates_tmp
   WHERE point_wkt = polygons_tmp.point2';
 EXECUTE 'UPDATE polygons_tmp SET pid3 = coordinates_tmp.id FROM coordinates_tmp
   WHERE point_wkt = polygons_tmp.point3';
-
---tuto cast treba optimalizovat
 
   
 UPDATE polygons_tmp SET face = 'f';
@@ -84,13 +81,4 @@ SET enable_seqscan = ON;
   END
 $$
 LANGUAGE plpgsql;
-
-
-
-
-
-
-
---v bash cat /home/sato/Desktop/dp/connect_to_db/vertex_from_pg.obj /.../face.obj  > /.../vertex.obj
---dorobit v c funkciu na spojenie suborov
 

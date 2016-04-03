@@ -1,0 +1,18 @@
+include ../../mixkit/mix-config
+
+SRCS = main.cxx singleQ.cxx  externQslim.cxx qslim.cxx
+OBJS = $(SRCS:.cxx=.o)
+
+all: qslim 
+
+qslim : $(OBJS)  ../../mixkit/src/libmix.a
+	$(CXX) -o qslim $(OBJS) $(LDFLAGS) $(LIBMIX) -lm
+
+
+
+clean:
+	-$(RM) -f $(OBJS) qslim
+
+#objects are compilated by implicit rules
+ g++ -c -Wall -Werror -fPIC CPPfile.cpp
+ g++ -shared -o libCPPfile.so CPPfile.o

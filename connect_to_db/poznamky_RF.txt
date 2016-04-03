@@ -1,0 +1,11 @@
+- pg3angles je obmedzena na verziu postgis priamo v zdrojovom kode (prekompilovane na postgis 2.2)
+- trosku cudne pouzivanie
+	-potreba .pgpass v home folder, aby stale nepindal heslo + aj tak explicitne zadat heslo ako parameter pre asynchronne funkcie pq3angles
+
+qslim produkuje nevalidnu (duplicitnu) geometriu?
+weight = 0 !!!!!!!!!!!!!!!!
+
+
+ako robit vystupy
+zadanie v AIS
+ako zaradit priklady pouzita pg3angles

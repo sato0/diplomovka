@@ -1,0 +1,7 @@
+#include "singleQ.h"
+
+int main()
+{
+     QSLIM("/home/sato/Desktop/dp/qslim-2.1/tools/qslim/bones.obj","bones333.obj",333,3,1,1000);
+    return 0;
+}
